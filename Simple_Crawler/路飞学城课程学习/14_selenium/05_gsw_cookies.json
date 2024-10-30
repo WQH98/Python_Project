@@ -1,0 +1,130 @@
+[
+  {
+    "domain": ".gushiwen.cn",
+    "expiry": 1721912604,
+    "httpOnly": false,
+    "name": "wsEmail",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "793390457%40qq.com"
+  },
+  {
+    "domain": ".gushiwen.cn",
+    "expiry": 1714741404,
+    "httpOnly": false,
+    "name": "wxopenid",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "defoaltid"
+  },
+  {
+    "domain": ".gushiwen.cn",
+    "expiry": 1732280605,
+    "httpOnly": false,
+    "name": "idsShiwen2017",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "%2c72502%2c70830%2c247%2c"
+  },
+  {
+    "domain": ".gushiwen.cn",
+    "expiry": 1721912604,
+    "httpOnly": false,
+    "name": "login",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "flase"
+  },
+  {
+    "domain": ".gushiwen.cn",
+    "expiry": 1721912604,
+    "httpOnly": false,
+    "name": "gsw2017user",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "2223781%7c8218550923F3B52C4A0EAA7944D89EFF%7c2000%2f1%2f1%7c2000%2f1%2f1"
+  },
+  {
+    "domain": ".so.gushiwen.cn",
+    "httpOnly": false,
+    "name": "Hm_lpvt_890cbddf95d987c60c4ff95fa719c319",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "1714136604"
+  },
+  {
+    "domain": ".gushiwen.cn",
+    "expiry": 1721912604,
+    "httpOnly": false,
+    "name": "gswEmail",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "793390457%40qq.com"
+  },
+  {
+    "domain": "so.gushiwen.cn",
+    "expiry": 1714140202,
+    "httpOnly": false,
+    "name": "codeyzgswso",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "fa245efdef41462a"
+  },
+  {
+    "domain": ".so.gushiwen.cn",
+    "expiry": 1745672604,
+    "httpOnly": false,
+    "name": "Hm_lvt_890cbddf95d987c60c4ff95fa719c319",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "1714136603"
+  },
+  {
+    "domain": ".gushiwen.cn",
+    "expiry": 1748696603,
+    "httpOnly": false,
+    "name": "gswZhanghao",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "793390457%40qq.com"
+  },
+  {
+    "domain": "so.gushiwen.cn",
+    "httpOnly": true,
+    "name": "ASP.NET_SessionId",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "tckgd2drrmlhvwbe0zfxj2l4"
+  },
+  {
+    "domain": ".gushiwen.cn",
+    "expiry": 1714741402,
+    "httpOnly": false,
+    "name": "ticketStr",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "203922031%7cgQHT8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyWlUzMFItbGVkN2kxZ3BQak5DMWgAAgQZpitmAwQAjScA"
+  },
+  {
+    "domain": "so.gushiwen.cn",
+    "expiry": 1721912602,
+    "httpOnly": false,
+    "name": "login",
+    "path": "/user",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "flase"
+  }
+]

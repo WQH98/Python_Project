@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/jquery.min.js"></script>
+    <script>
+        // $(function() {
+        //     alert(123);
+        // })
+        function setCookies(name, value) {
+            let Days = 30;
+            let exp = new Date();
+            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+            document.cookie = name + "=" + escape(value) + ";expires" + exp.toGMTString();
+        }
+        $(function() {
+            setCookies("alex", "sb");
+            $("#btn").click(function() {
+                // 报告给服务器 有人点我了
+                // 发送请求
+                $.ajax({
+                    // 服务器地址
+                    url: "/test1?name=sb&age=18",
+                    // 请求方式
+                    method: "get",
+                    // 请求成功以后 服务器返回的结果
+                    success: function(response_data) {
+                        // console.log("=====>", response_data);
+                        $("#hehe").text(response_data);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>欢迎{{name}}来到直播间 感谢榜一大哥送来的{{gift}}</h1>
+    <hr/>
+    <button id="btn">我是按钮</button>
+    <hr/>
+    <div id="hehe"></div>
+</body>
+</html>

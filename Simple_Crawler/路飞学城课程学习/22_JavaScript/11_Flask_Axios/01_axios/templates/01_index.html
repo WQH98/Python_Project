@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/jquery.min.js"></script>
+    <script src="/static/axios.min.js"></script>
+    <script>
+        axios.interceptors.request.use(function(config) {
+            console.log("对所有的请求进行拦截", config);
+            return config;
+        }, function() {
+            console.log("请求有问题");
+        });
+
+        axios.interceptors.response.use(function(resp){
+            console.log("对所有的返回进行拦截", resp);
+            return resp;
+        }, function() {
+            console.log("返回有问题");
+        })
+
+        $(function() {
+            $("#btn").click(function() {
+                // axios得到的是返回内容是响应对象
+                axios.get("/test1").then(function(data) {
+                    // 拿到响应内容
+                    console.log(data);
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <h1>欢迎{{name}}来到直播间 感谢榜一大哥的{{gift}}</h1>
+    <hr/>
+    <button id="btn">我是一个按钮</button>
+    <hr/>
+</body>
+</html>

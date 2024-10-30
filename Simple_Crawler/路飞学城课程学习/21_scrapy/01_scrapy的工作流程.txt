@@ -1,0 +1,20 @@
+1、需要创建项目
+    scrapy startproject 项目名
+
+2、进入到项目目录
+    cd 项目名
+
+3、生成spider
+    scrapy genspider 爬虫的名字 网站的域名
+
+4、调增spider
+    给出start_urls
+    补充完整parse 解析数据
+
+5、调整settings配置文件
+    关闭robots协议
+    关闭日志的信息 如果想留下有用的 只需要调整日志记录级别
+    LOG_LEVEL = "WARNING"
+
+6、运行scrapy程序
+    scrapy crawl 爬虫的名字

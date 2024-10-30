@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        // 这样构建对象的缺点是要创建相同属性的对象时重复写的东西太多
+        // 构建一个对象
+        var x = {
+            name: "alex",
+            age: 188,
+            chi: function(food) {
+                console.log(this.name, "在吃", food);
+            }
+        }
+        console.log(x.name);
+        x.chi("竹笋");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

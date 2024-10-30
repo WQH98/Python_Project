@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        // setInterval 是每隔多长时间做一次
+        var x = 0;
+        setInterval(function(){
+            console.log(x);
+            x++;
+        }, 1000);
+        // 这个定时器的作用：
+        // 1、心跳监测 一般用来监测用户是否掉线了
+        //            也可以用来监测用户的浏览器环境是否健康
+        // 2、无限debugger
+        // 无限debugger的核心原理
+        // 这种最简单 在执行setInterval之前 把setInterval置空
+        // setInterval = function(){};
+        // setInterval(function(){
+        //     debugger;
+        // }, 1000);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

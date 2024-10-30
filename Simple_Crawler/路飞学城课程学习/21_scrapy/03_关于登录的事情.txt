@@ -1,0 +1,25 @@
+登录之后的效果
+1、常规网站登录
+    网站会在cookie中写入登录信息
+    直接在登录成功之后 在返回的响应头里面带着set-cookie的字样
+    后续的请求会在请求头中 发现cookie的字样
+
+    在requests中 用session来自动维护响应头的set-cookie
+    session = requests.session()
+
+2、ajax的登录
+    登录后 从浏览器中可以看到响应头中可能没有 set-cookie
+    但是 从后续的访问中 发现有cookie并且cookie有很明显的登录后的字样
+    90%的可能性是：cookie是通过JavaScript脚本语言 动态设置的
+    这种情况 session就不能自动维护了 需要我们通过程序手动完成cookie的拼接
+    例如 ajax登录成功后返回的json
+    {username: alex, usertoken: 10086}
+    需要按照js里的处理过程 用python实现一样的逻辑(js逆向)
+
+3、依然是ajax请求 也没有响应头 也是js
+    和2的区别是 他不会把登录信息放在cookie中
+    新型的网页基本上都是把登录请求放在storage里
+    每次请求 都从storage拿出来登录信息 放在请求参数里
+    这种网页 就必须去逆向了
+    有一个统一的解决方案 去找公共拦截器
+

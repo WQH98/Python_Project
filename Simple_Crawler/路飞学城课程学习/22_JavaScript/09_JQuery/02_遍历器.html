@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.min.js"></script>
+    <script>
+        $(function() {
+            $("ul li").each(function() {
+                // 这样直接打印的是jquery的对象
+                // console.log(this);
+                // each中的函数 拿到的是html的DOM对象 而不是jquery对象
+                // 需要把DOM对象转化为jquery对象 才可以使用jquery的功能
+                var wb = $(this).text();
+                console.log(wb);
+            });
+        });
+    </script>
+</head>
+<body>
+    <ul>
+        <li>alex</li>
+        <li>sb</li>
+        <li>wusir</li>
+        <li>sb</li>
+        <li>qf</li>
+    </ul>
+</body>
+</html>

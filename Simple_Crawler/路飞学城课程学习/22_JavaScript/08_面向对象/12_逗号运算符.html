@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function s() {
+            // 依次打印 1 2 3
+            console.log(1), console.log(2), console.log(3);
+            // 在整体进行赋值的时候 取的是最后一个值
+            let s = (1, 2, 3);
+            console.log(s);
+
+            var a;
+            return a = 10, a++, a += 100, {"name": "alex", "age": a};
+        }
+        let r = s();
+        console.log(r);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

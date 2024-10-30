@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        // 在Js中 所有的函数都是Function的对象
+        // 代码是通过Function构造器传递进去的
+        var func = new Function("console.log(123)");
+        // ===> function() {console.log(123);}
+        func();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

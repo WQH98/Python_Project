@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function Person() {
+            this.chi = function() {
+                console.log("chi");
+            }
+        }
+        var p = new Person();
+        console.log(p.toString());
+        /*
+        *   这样打印出的结果是 [object Object] 为什么打印一个不存在的方法 不会报错
+        *   原型链：对象__proto__所指向的是这个类型的prototype 而prototype当成对象来看 也拥有__proto__...
+        *          直到最后找到Object.prototype
+        * */
+    </script>
+</head>
+<body>
+
+</body>
+</html>

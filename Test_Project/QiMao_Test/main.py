@@ -1,0 +1,21 @@
+import requests
+from bs4 import BeautifulSoup
+
+
+# 签到
+def sign_in():
+    url = "https://xiaoshuo.wtzw.com/app-h5/freebook/welfare-center?full_screen=2&type=1&open_push=1"
+    headers = {
+        "user-agent": "Mozilla/5.0 (Linux; Android 11; ONEPLUS A6000 Build/RKQ1.201217.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/92.0.4515.131 Mobile Safari/537.36 webviewversion/73700 webviewpackagename/com.kmxs.reader adper/2 adpro/2",
+        "qm-params": "cLGeuyoMmqN6OlNDOzf5A5HwtT4MAh9wNTKngeOlNIfEgTg5taG5ByoTmLU5BEK5A5G7kUsHBh0EgI9lghflNTskkRuSFSN3RIRkg5HjHSRUmqF5A5HwgI9wgI9wgaMUphk5tqHwNT4QgI9wgaMwgI9wgI9wgI9wgI95taG-pCp14lfQmqF5A5HLgIHegh0LgT9YghFnAq0wgIo24h9lAI4LpI9nAIHnNI-eNl0EphHr4zN2pzFegI9r4ToxAIp-NTkxgy4lA3HjHzUx4LHWH5HjHSNDuCGTpCR1paHWH-NoghHngI4eNhHlNfFnNe-wN04wg-Flge4Ug-FrkfNsNTGIk-0lNIflkh-EA00rgh-eFh4MgIkogIHYNexsgfF5taGD4q2-tqYDtqNx4lx2HTZ5FMfngT0wNTgUgT4UkI0EAh9MkT9LkI4eNTfLkIxoFM0lg-NyFh4MNhpoAhOrFhKnAhNsNTFwN0fwgT-EA00nkaHjHSNYOLUlpCH5A5Hng3HjHSkLuCNMpqFQmqF5A5G0RC2gAo-E3RpqklKrhT2LRSOEfyKUgqNkmfuzqqUFR-FYgeu3k24UR0kZq-rwBouqmlkDhMfMNqNjqTNAgfGDh2kym2RCB0xmBynMRfpmkfJfhhNTgzKnH5w5OyxDBzfQByRlpqw5A5GHH5w5mqU2m3HWH5HjHzUDpyRjHTZ5hMYof0nRfLssNT9wgaHjHSuj45U1BqR1HTZ5H5w5uln5tCR1paHWH-NoghHngI4eNhHlNfFnNe-wN04wg-Flge4Ug-FrkfNsNTGIk-0lNIflkh-EA00rgh-eFh4MgIkogIHYNexsgfF5taGTBy22BSFQmqF5A5G2pI9epIHU4lN2Nhx-pyNzH5w54SGxBzF5A5G8BzRFB_ReH5w5Blo1paHWH-NoghHngI4eNhHlNfFnNe-wN04wg-Flge4Ug-FrkfNsNTGIk-0lNIflkh-EA00rgh-eFh4MgIkogIHYNexsgfF5taGepCNemqJ7tq2-HTZ5ghOwgI4nNhKwNTgMg5GJ",
+        "authorization": "eyJhbGciOiJSUzI1NiIsImNyaXQiOlsiaXNzIiwianRpIiwiaWF0IiwiZXhwIl0sImtpZCI6IjE1MzEyMDM3NjkiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE3MDE5MTE2OTIsImlhdCI6MTcwMDYxNTY5MiwiaXNzIjoiaHR0cHM6Ly94aWFvc2h1by53dHp3LmNvbS9hcGkvdjEvbG9naW4vaW5kZXgiLCJqdGkiOiI0MGFmOWJjN2Y1YmRlNTliYWRlYzI5NTc2NjFkNDIxMyIsInVzZXIiOnsidWlkIjo0ODI4MTIxODYsIm5pY2tuYW1lIjoi5LiD54yr5Lmm5Y-LXzA3MTQ1NDU2NTQ1MSIsImltZWkiOiIiLCJ1dWlkIjoiMDAwMDAwMDAtNWU0Yi1iMDY2LTAwMDAtMDAwMDAwMDAwMDAwIiwiZGV2aWNlSWQiOiIyMDIzMTEyMjA5MTQxOWEwMDFlYTA2ODYyZDAxODIxNDkzN2E3ZTI4YmNlZmQzMDA4YjFhODZkNjRhMGY2OSIsInJlZ1RpbWUiOjE2ODkzMDI5OTEsInZpcEV4cGlyZUF0IjoxNjkyNTgxNjA0LCJzbV9pZCI6IjIwMjMwNzE0MTA0OTQ5MjkwNTllZDM1M2RjYzg5N2Y2ODhiMTVmNjlkYjlkMGMwMDllOTFlMzE0NWYxZmQ1IiwibnV0IjoxNjg5MzAyOTk4LCJpZnUiOjAsImlzX3JiZiI6MCwiYWN0X2lkIjowLCJiaW5kX2F0IjowLCJ0aWQiOiJEVVlxSGVDU25idU5SM0RQMXdER1pJRHg4eTBhd0xLN2xqYThSRlZaY1VobFExTnVZblZPVWpORVVERjNSRWRhU1VSNE9Ia3dZWGRNU3pkc2FtRTRjMmgxIiwidF9tb2RlIjoyfX0.kP10ICdsLIjARdhNdcYWqrKluXIkLBC89tb1quUlyJ0kx4YUsY3SAptMaqTrF-9NJttvOlTlGylzoqbYQv2GfBs7_T5ABi8pEKoMwvB19bkRHrAdAyoPkHOdiAp0xCxbQHpmevGiPZmQEt8WpFsVd9wBQWpZWWyfifgT0eYkRs8"
+    }
+    r = requests.get(url, headers=headers)
+    if r.status_code == 200:
+        print(soup)
+    else:
+        print("连接失败")
+
+
+sign_in()
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+            this.chi = function() {
+                console.log(this.name, "在吃东西");
+            }
+        }
+
+        // 给Person增加一个新的功能 对象也就跟着类有了相同的功能
+        Person.prototype.happy = function(with_name) {
+            console.log(this.name, "和", with_name, "在一起happy");
+        }
+
+        var p = new Person("alex", 188);
+        p.chi();
+        p.happy("1号");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+            this.chi = function(food) {
+                console.log(this.name, "在吃", food);
+            }
+        }
+
+        var p1 = new Person("alex", 188);
+        var p2 = new Person("wusir", 288);
+
+        // 调用类中的方法 正常来说是这样的
+        p1.chi("shit");
+
+        // call和apply 可以指定某个对象去执行某个函数
+        // 函数.call(对象, 参数1, 参数2, ....);
+        p2.chi.call(p1, "人参");
+
+        name = "樵夫";
+        // 普通的函数 不与任何构造器绑定
+        function yundong(with1, with2) {
+            console.log(this.name, "和", with1, "|", with2, "在一起运动");
+        }
+        // 此时this没有任何指向 最后就是在window中获取name
+        yundong("1号", "2hao");
+        // 指定了对象p1 其中有name
+        yundong.call(p1, "1hao", "2hao");
+        // 使用call
+        // 1、可以执行函数
+        // 2、可以指定对象是谁
+
+        function fun(name, age) {
+            console.log(name, age);
+        }
+
+        window.fun("alex", 188);  // 正常写的版本
+        fun.call(window, "alex", 199);   // call版本
+        fun.apply(window, ["alex", 177]);    // apply版本
+
+        // 函数内部一个隐藏属性 可以接受到所有参数
+        function func() {
+            console.log(arguments[0]);
+            console.log(arguments[1]);
+        }
+        func("alex", 188);
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

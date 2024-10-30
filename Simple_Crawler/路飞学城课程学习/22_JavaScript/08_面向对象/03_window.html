@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        // (function(){
+        //     window.abc = {
+        //         x: 18,
+        //     }
+        // })()
+        // console.log(abc);
+
+        // 一般来说 会加一个混淆
+        // 在第一个js文件中
+        var $_ts = window;
+
+        // 在第二个文件中
+        (function(n) {
+            n.abc = {
+                x: 18,
+            }
+        })($_ts);
+
+        // 在主代码中
+        console.log(abc);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

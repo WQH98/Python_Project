@@ -1,0 +1,113 @@
+"""
+车智赢
+1、目标：账号+密码自动登录
+2、版本：V3.4.0
+逆向流程
+    1、安装到设备
+    2、抓包&分析   ->   任务拆分
+    3、jdax反编译apk
+    4、关键字定位代码
+    5、frida hook验证 + 请求参数和返回值
+    6、py还原算法 + 功能实现
+
+
+抓包 分析
+    请求方式：POST
+    请求的URL：https://dealercloudapi.che168.com/tradercloud/sealed/login/login.ashx
+    请求体
+        json格式：{"name": "tom", "age": "22"}
+        表单格式：name=tom&age=22
+    请求头
+        sign = xxxxxx
+        info = xxxxxx
+        bld  = xxxxxx
+
+注意：
+    1、固定值  aid=xx  bid=123  platform=android
+    2、sign不是固定的
+
+分析结果
+    pwd密码逆向
+        1234567890  ->  e807f1fcf82d132f9bb018ca6738a19f
+    udid逆向
+    _sign逆向
+
+jadx反编译
+
+关键字定位代码
+    关键字是什么
+        1、使用的猜想
+        2、关联关键字
+        3、独有信息
+            url https://dealercloudapi.che168.com/tradercloud/sealed/login/login.ashx
+
+    使用jadx搜索url 搜出来了字符串LOGIN_URL 查找这个字符串 发现在loginByPassword函数中使用到了
+    在程序中验证一下 hook出这个函数
+    关键字都有那些
+    基于py脚本执行shell命令
+    import subprocess
+    subprocess.getoutput("adb forward tcp:27042 tcp:27042")
+    subprocess.getoutput("adb forward tcp:27043 tcp:27043")
+
+
+签名处理
+    本来的数据如下
+        info = {
+            "aid": "123",
+            "name": "root",
+            "age": 19
+        }
+    这些数据为了防止被爬 可能会加一个签名
+        info = {
+            "aid": "123",
+            "name": "root",
+            "age": 19,
+            "sign": "sadioqwjdoiqjwodiqjdio",
+        }
+
+
+    udid
+        treeMap.put("udid", AppUtils.getUDID(ContextProvider.getContext()));
+        udid = AppUtils.getUDID(ContextProvider.getContext())
+        udid = SecurityUtil.encode3Des(
+            context,
+            getIMEI(context) +
+            HiAnalyticsConstant.REPORT_VAL_SEPARATOR +
+            System.nanoTime() +
+            HiAnalyticsConstant.REPORT_VAL_SEPARATOR +
+            SPUtils.getDeviceId()
+        );
+        20409ce4-f650-3682-b466-9f8dbb867301|247517636048597|397671
+
+        1、getIMEI(context)  -->  20409ce4-f650-3682-b466-9f8dbb867301
+            uuid值
+        2、System.nanoTime()  -->  247517636048597
+            247517636048597 ~ 247517616048597
+        3、SPUtils.getDeviceId()  -->  397671
+            - 溯源 找到真正生成的的位置（个推ID）
+            - 测试 20、319350、290005
+
+    拼接：
+        SecurityUtil.encode3Des(UUID的值 + "|" + 开机时间 + "|" + 随机一个6位数的数字)
+
+    调用encode3Des算法
+        首先要知道三个东西
+        key = AHAPIHelper.getDesKey(context)   "appapiche168comappapiche168comap"
+        iv = "appapich"
+        明文 = "UUID的值 + "|" + 开机时间 + "|" + 随机一个6位数的数字"
+
+        key和iv都不会是动态的 如果没有明确在代码写出来的 直接Hook就可以
+
+        Python如何实现Des算法
+
+
+    8.实现
+
+
+    小结：
+        - 逆向流程
+        - 关键字定位代码
+        - 切记：jadx反编译不是100% 重点在分析逻辑 进行Hook校验
+        - Python还原的算法
+
+"""

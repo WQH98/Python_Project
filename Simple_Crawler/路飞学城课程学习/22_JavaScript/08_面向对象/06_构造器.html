@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+            this.chi = function() {
+                console.log(this.name, "在吃东西");
+            }
+        }
+
+        var p = new Person("alex", 188);
+        console.log(p.constructor); // 构造器
+        console.log(p.constructor === Person);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

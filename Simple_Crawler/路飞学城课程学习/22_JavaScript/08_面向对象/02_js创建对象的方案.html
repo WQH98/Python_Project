@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        // 第二种构建对象的方案
+        // 在前端可以通过构造器(constructor)直接构建一个对象出来
+        function Person(name, age) {
+            this.name = name;   // 这么写99%是一个构造器
+            this.age = age;
+            this.chi = function(food) {
+                console.log(this.name, "在吃", food);
+            }
+        }
+        // Person("alex", 188);   // 这样是函数的调用
+
+        var p = new Person("alex", 188);  // 这样才是使用构造器的正确姿势
+        console.log(p.name);  // 调用属性
+        p.chi("shit");
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

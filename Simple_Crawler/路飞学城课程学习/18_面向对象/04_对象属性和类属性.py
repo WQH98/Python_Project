@@ -1,0 +1,24 @@
+class Test:
+    # 属性
+    # 类属性name
+    name = 'lucky'
+    age = 18
+
+    # 方法
+    # self是由当前对象自动传参
+    def speak(self, sex=1):
+        self.aa = 'zhangsan'
+        print('lucky is a good man', sex)
+
+
+t = Test()
+t.speak()
+# __dict__ 查看对象内部所有属性名和属性值组成的字典
+print(t.__dict__)
+print(Test.__dict__)
+# 创建对象属性name
+t.name = 'zhangsan'
+# 调用的时候会首先调用对象属性 如果对象中没有 则找类中的
+# 如果类中也没有的话 则报错
+print(t.name)
+

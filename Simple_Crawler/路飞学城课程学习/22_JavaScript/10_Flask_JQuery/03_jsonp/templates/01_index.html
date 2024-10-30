@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/jquery.min.js"></script>
+    <script>
+        $(function() {
+            $("#btn").click(function() {
+                $.ajax({
+                    url: "/test1",
+                    method: "get",
+                    // 调整成jsonp 目的是为了解决跨域问题
+                    dataType: "jsonp",
+                    // 间接的获取到服务器返回的数据
+                    success: function(data) {
+                        console.log(data);
+                    }
+                })
+            });
+        });
+        // 在你使用jsonp的时候 jquery会自动帮你生成一个临时的函数 函数名就是callback的名字
+        // function xxxxx() {
+        //     // 在这里面
+        //     success(data);
+        // }
+    </script>
+</head>
+<body>
+    <h1>欢迎{{name}}来到直播间 感谢榜一大哥的{{gift}}</h1>
+    <hr/>
+    <button id="btn">我是一个按钮</button>
+    <hr/>
+</body>
+</html>

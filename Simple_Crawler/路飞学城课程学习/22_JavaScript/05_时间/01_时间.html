@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        setInterval(function(){
+            var date = new Date();   // 获取到现在的系统时间
+            // 时间格式化 YYYY-MM-dd HH:mm:ss
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+            var second = date.getSeconds();
+
+            var time = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
+
+            console.log(time)
+        }, 1000);
+
+        // 时间戳
+        // js中 时间戳的单位是毫秒
+        time = new Date().getTime();
+        console.log(time);
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

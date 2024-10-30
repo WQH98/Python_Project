@@ -1,0 +1,134 @@
+识货APP
+
+2、关于版本
+    - V7.20.1版 不能用 需要强制更新7.36.0
+
+3、解决强制更新
+    - 关闭和打开网络
+    - Hook机制
+        - 反编译 & 找代码
+            UpdateDialog updateDialog = new UpdateDialog(f20545b.get());
+            updateDialog.show();
+        - 反调试
+            进入手机识货app的安装目录 吧libmsaoaidesc.so删除
+        - Hook  有两种形式
+            - 附加 自己把手机app启动 + 启动Hook
+            - spawn 自动把app启动 + 启动Hook
+
+
+    注意：后端API没有更新的情况下可以使用上面两种办法
+
+5、插入知识点
+    5.1 为什么删除libmsaoaidesc.so就是反调试
+        - 反调试so中实现 如果有frida使用 就给关闭
+        - 在app运行中都有加载so文件
+    5.3 Hook
+        python形式 + js代码
+        - attach
+        - spawn
+        js代码 + 命令行
+        - attach
+            frida -Uf -l 04.hook_update.js
+        - spawn
+            frida -UF com.hupu.shihuo -l 04.hook_update.js
+
+6、实现目标
+    - 搜索 直接实现
+    - 详细
+        - 请求数据 + 响应数据 ==> 加密
+        - 拦截器变动         ==> 明文
+    - 注意事项
+        - 保留去除强制更新脚本
+        - 调用栈问题
+
+7、搜索功能没有加密 直接去请求就可以
+
+8、商品详情有加密 需要查看源代码
+    - 请求加密 + 响应解密
+    1、搜url
+    2、特殊的变量
+    3、通用变量 data/code/status
+    也可以利用Hook机制去猜想app开发者用到了某个功能
+    - Hook base64编码代码 + AES加密 ...
+    - TreeMap
+        TreeMap map = new TreeMap();
+        map.put("k1", 123);
+        map.put("k2", 123);
+        map.put("k3", 123);
+        map.put("k4", 123);
+        ...
+    - StringBuilder
+        StringBuilder sb = new StringBuilder();
+        sb.append("data");
+        sb.append("=");
+        sb.append("密文");
+        String result = sb.toString();
+
+关于拦截器
+    公共参数的处理 放在拦截器就可以一劳永逸了 不需要每次都重新写一遍
+    // 创建拦截器
+    // 第一种写法 相当于实现了Interceptor这个类和intercept方法
+    // 然后使用Interceptor interceptor将这个类立即实例化了
+    Interceptor interceptor = new Interceptor() {
+        public Response intercept(Chain chain) throws IOException{
+            // 1988812212 + 固定字符  => MD5加密
+            Request request = chain.request().newBuilder().addHeader("ts", "1988812212").addHeader("sign", "xxxx").build();
+
+            // 请求前
+            Response response = chain.proceed(request);
+            // 请求后
+            return response;
+        }
+    }
+    // 第二种写法
+    // 先定义类 再实例化 将第一种写法的两个步骤分开
+    public class myInterceptor extends Interceptor {
+        public Response intercept(Chain chain) throws IOException{
+            // 1988812212 + 固定字符  => MD5加密
+            Request request = chain.request().newBuilder().addHeader("ts", "1988812212").addHeader("sign", "xxxx").build();
+
+            // 请求前
+            Response response = chain.proceed(request);
+            // 请求后
+            return response;
+        }
+    }
+    // 实例化对象
+    Interceptor interceptor = new myInterceptor();
+    // 发送请求的时候带上拦截器
+    OkHttpClient client = new OkHttpClient.builder().addInterceptor(interceptor).build();
+
+    拦截器的漏洞
+    描述：默认请求加密和响应解密 让拦截器别做加密和解密
+    1、这个APP中都用了哪些拦截器？
+        - 通过Hook addInterceptor 方法  就可以得到APP中所有的拦截器
+
+
+常见功能
+    - 其他的APP 找到代码的位置 分析算法 Python代码实现
+    - 识货APP 不需要逆向
+    注意：部分代码未反编译出来
+
+
+
+
+
+
+
+https://sh-gateway.shihuo.cn/v4/services/sh-goodsapi/app_swoole_shoe/preload/single?
+devices=ONEPLUS%20A6000
+&dspm=f3a7c847f4f0ab86&gender=2
+&goods_id=4721171
+&sourceLocation=oneRowOne%3A%5BN%5D
+&style_id=144753853
+&top_style_id=144753853
+&tpExtra=%7B%22sourceTp%22%3A%22home%3Asearch%3A%22%2C%22sourceTpName%22%3A%22%E8%B5%A4%E5%85%94%E4%B8%83pro%22%2C%22wsf%22%3A%22normal_search_words%22%2C%22ast%22%3A%22%E8%B5%A4%E5%85%94%E4%B8%83pro%22%2C%22is_inspire%22%3A0%2C%22dgReqId%22%3A%22SHSS_CG-POSTLQDALAPE_SPU_1%3AR1-L1-G12%7C%7CR1-L2-G23%7C%7CR1-L3-G35%22%2C%22si%22%3A%228001%22%2C%22skc%22%3A%22144753853%22%2C%22layer%22%3A%222%22%7D
+&access_token=b7EM8Up9VSFJUhkyEJ&minVersion=15670
+&clientCode=%7Bholder%7D&v=7.20.1
+&channel=huawei
+&device=ONEPLUS%20A6000
+&platform=android
+&timestamp=1710312582730
+&access_token=b7EM8Up9VSFJUhkyEJ
+&token=6444011346acc1b9d2795d7e1d45bd6d
+
