@@ -1,7 +1,7 @@
 import requests
 import time
 
-datas = ["be254fbb910e1d79ce6e63e6b22768ba", "317cd26646611682583b404c87fcc52b"]
+datas = ["0b6c21c89dc5a77c0a1919d26273b7e1", "2fa1777ae689d6eaade61f26d367caed"]
 
 
 # 更新token
@@ -73,7 +73,7 @@ class XP_FARM:
         print("开始登录")
         try:
             resp = requests.post(url=self.information_url, headers=self.information_header).json()
-            # print(resp)
+            print(resp)
             mobile = resp["data"]["mobile"]
             nickname = resp["data"]["nickname"]
             integral = resp["data"]["integral"]
