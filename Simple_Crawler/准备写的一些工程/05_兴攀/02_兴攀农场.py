@@ -1,40 +1,41 @@
 import requests
 import time
 
-datas = ["0b6c21c89dc5a77c0a1919d26273b7e1", "2fa1777ae689d6eaade61f26d367caed"]
+json_datas = [{"cloudID":"86_U3eRpdwmEoXECACV6cSmyo59QVEi0AU57aGtZ9hQnZz_2MBmCOxyjnhT4kA","encryptedData":"pdWHF0uN5XEi6LbQDvySw4ICNCYTjefF9NnP5Z9ZFT0GYtsWD/7pILksEZZfF8OMBJxGo7CeJrrQjeMalMC8cNPC+wePreYISZYhYgLIHxA5zbt5Ql2eQMSvMd82a9pmnYkwVfjbx49lxswDlLQvVlmJ/HVHDBoKKxlPx3g5THe/YpCzWeyxk1wOJwsTsdnTQc+sLBi/W/tEU3EekJetjBpV12QIWDQJUmy3CArsJ2UMYjhP+eOojvl1Nl65Yj1bmWfptCNrRICx9UsoP9GfpfhG7MlKbTNHR+SrpU6z8fKomJD/zFfKSphRj7LVoT3Qghi/gLWKliP5ZTEkDHEzPmOv8iFgEWc18cxBlz9d1QrWWHfwOrl/4KADruoovyYtjftCmCqP4KkvpIWqzelra7CEcrwwx/4WFjPszDHjU+mXYHZ+Ly1qqBaM8JaUyc0h","iv":"bEZ+Hs81IrvjNZxika7ESQ==","signature":"01b5b50dafa2d5255e3a0eb2bdeb70b9c57b5404","userInfo":{"nickName":"微信用户","gender":0,"language":"","city":"","province":"","country":"","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","is_demote":"true"},"rawData":"{\"nickName\":\"微信用户\",\"gender\":0,\"language\":\"\",\"city\":\"\",\"province\":\"\",\"country\":\"\",\"avatarUrl\":\"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132\",\"is_demote\":true}","errMsg":"getUserProfile:ok","openid":"o4WMG41rENEG3_YmaHSvJj0uJ-4g","unionid":"oT4Cj0zhqmYouiyd5zpHn82jaDUY"},
+              {"cloudID":"86_eA8g4V0mXnIeh_4apVYYbGTw0fyiNH2ClOB4AQfipuMI-R-Kr12lwW8jDzc","encryptedData":"tILQmXyfaaVn5mUzlcfpdNd6aLEcLBzsTheKVqKUColnrPCuc0Cc59ITMSNONThxmBAwaR7anu2lkj1rKYDbQDQ86lC5eBLsKx+64uF0yMB8WwkIwnA6vLsLxa1MK3ayYwUUjg1h1016eDd92ENARf4mVMxgc3iFZrIysnbZS0gITkuh0cHRX+Bf1DEP/BXOZTBtbXEALkPxx6yQQeH7AmtsMN6Om/ABSOkWoW+n+1xT7ERJgYnZZQh/a7w4ZmU1qb9zzio8G/YHqEIUrTHlkP1uQXh9pLoZgn/DcfUkw+vYi27RWP3dSRm8ZNJkKA7zZbmU2VO82+GXF2C2eU2sbwcgWcEN9le0gq8KqpuUPUWHKqpHuv+Yzdp2IOp2MEActQALMmJGiOiOUiJHugILj080vyKcoj5HlnCWpiF0x28UQqb0tegBOEe1lI0uo3jf","iv":"h6zKl0mS1+5XRcN2eChAXg==","signature":"3ba9b6e4087d4210491a33f702e992ece87d56db","userInfo":{"nickName":"微信用户","gender":0,"language":"","city":"","province":"","country":"","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","is_demote":"true"},"rawData":"{\"nickName\":\"微信用户\",\"gender\":0,\"language\":\"\",\"city\":\"\",\"province\":\"\",\"country\":\"\",\"avatarUrl\":\"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132\",\"is_demote\":true}","errMsg":"getUserProfile:ok","openid":"o4WMG42vIqH4fGQgxkL6KZNo0060","unionid":"oT4Cj0_dYqmiGELumUNhti7K3Vc0"}]
 
 
 # 更新token
-# def update_token(data):
-#     print("开始刷新token")
-#     headers = {
-#         "content-length": "1303",
-#         "xweb_xhr": "1",
-#         "contenttype": "[object Undefined]",
-#         "authorization": "",
-#         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090c04)XWEB/11275",
-#         "content-type": "application/json",
-#         "accept": "*/*",
-#         "sec-fetch-site": "cross-site",
-#         "sec-fetch-mode": "cors",
-#         "sec-fetch-dest": "empty",
-#         "referer": "https://servicewechat.com/wx27e219ff3142b7c8/63/page-frame.html",
-#         "accept-encoding": "gzip, deflate, br",
-#         "accept-language": "zh-CN,zh;q=0.9",
-#     }
-#     try:
-#         resp = requests.post("https://p.xpfarm.cn/treemp/wx.Login/index", headers=headers, json=data).json()
-#         if resp["code"] == 1000:
-#             print("token刷新成功")
-#             token = resp["data"]["token"]
-#             return token
-#         else:
-#             print("刷新token失败 直接退出")
-#             exit(0)
-#     except Exception as e:
-#         print(e)
-#         print("刷新token失败 直接退出")
-#         exit(0)
+def update_token(json_data):
+    print("开始刷新token")
+    headers = {
+        "content-length": "1303",
+        "xweb_xhr": "1",
+        "contenttype": "[object Undefined]",
+        "authorization": "",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090c04)XWEB/11275",
+        "content-type": "application/json",
+        "accept": "*/*",
+        "sec-fetch-site": "cross-site",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-dest": "empty",
+        "referer": "https://servicewechat.com/wx27e219ff3142b7c8/63/page-frame.html",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "zh-CN,zh;q=0.9",
+    }
+    try:
+        resp = requests.post("https://p.xpfarm.cn/treemp/wx.Login/index", headers=headers, json=json_data).json()
+        if resp["code"] == 1000:
+            print("token刷新成功")
+            token = resp["data"]["token"]
+            return token
+        else:
+            print("刷新token失败 直接退出")
+            exit(0)
+    except Exception as e:
+        print(e)
+        print("刷新token失败 直接退出")
+        exit(0)
 
 
 # 签到
@@ -227,8 +228,8 @@ class XP_FARM:
 
 
 if __name__ == '__main__':
-    for data in datas:
-        xp1 = XP_FARM(data)
+    for json_data in json_datas:
+        xp1 = XP_FARM(update_token(json_data))
         xp1.get_information()
         # xp1.sign_in()
         xp1.get_tree_info()
