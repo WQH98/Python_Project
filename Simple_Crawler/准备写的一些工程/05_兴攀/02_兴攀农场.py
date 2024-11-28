@@ -1,8 +1,30 @@
 import requests
 import time
+import threading
 
 json_datas = [{"cloudID":"86_U3eRpdwmEoXECACV6cSmyo59QVEi0AU57aGtZ9hQnZz_2MBmCOxyjnhT4kA","encryptedData":"pdWHF0uN5XEi6LbQDvySw4ICNCYTjefF9NnP5Z9ZFT0GYtsWD/7pILksEZZfF8OMBJxGo7CeJrrQjeMalMC8cNPC+wePreYISZYhYgLIHxA5zbt5Ql2eQMSvMd82a9pmnYkwVfjbx49lxswDlLQvVlmJ/HVHDBoKKxlPx3g5THe/YpCzWeyxk1wOJwsTsdnTQc+sLBi/W/tEU3EekJetjBpV12QIWDQJUmy3CArsJ2UMYjhP+eOojvl1Nl65Yj1bmWfptCNrRICx9UsoP9GfpfhG7MlKbTNHR+SrpU6z8fKomJD/zFfKSphRj7LVoT3Qghi/gLWKliP5ZTEkDHEzPmOv8iFgEWc18cxBlz9d1QrWWHfwOrl/4KADruoovyYtjftCmCqP4KkvpIWqzelra7CEcrwwx/4WFjPszDHjU+mXYHZ+Ly1qqBaM8JaUyc0h","iv":"bEZ+Hs81IrvjNZxika7ESQ==","signature":"01b5b50dafa2d5255e3a0eb2bdeb70b9c57b5404","userInfo":{"nickName":"微信用户","gender":0,"language":"","city":"","province":"","country":"","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","is_demote":"true"},"rawData":"{\"nickName\":\"微信用户\",\"gender\":0,\"language\":\"\",\"city\":\"\",\"province\":\"\",\"country\":\"\",\"avatarUrl\":\"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132\",\"is_demote\":true}","errMsg":"getUserProfile:ok","openid":"o4WMG41rENEG3_YmaHSvJj0uJ-4g","unionid":"oT4Cj0zhqmYouiyd5zpHn82jaDUY"},
               {"cloudID":"86_eA8g4V0mXnIeh_4apVYYbGTw0fyiNH2ClOB4AQfipuMI-R-Kr12lwW8jDzc","encryptedData":"tILQmXyfaaVn5mUzlcfpdNd6aLEcLBzsTheKVqKUColnrPCuc0Cc59ITMSNONThxmBAwaR7anu2lkj1rKYDbQDQ86lC5eBLsKx+64uF0yMB8WwkIwnA6vLsLxa1MK3ayYwUUjg1h1016eDd92ENARf4mVMxgc3iFZrIysnbZS0gITkuh0cHRX+Bf1DEP/BXOZTBtbXEALkPxx6yQQeH7AmtsMN6Om/ABSOkWoW+n+1xT7ERJgYnZZQh/a7w4ZmU1qb9zzio8G/YHqEIUrTHlkP1uQXh9pLoZgn/DcfUkw+vYi27RWP3dSRm8ZNJkKA7zZbmU2VO82+GXF2C2eU2sbwcgWcEN9le0gq8KqpuUPUWHKqpHuv+Yzdp2IOp2MEActQALMmJGiOiOUiJHugILj080vyKcoj5HlnCWpiF0x28UQqb0tegBOEe1lI0uo3jf","iv":"h6zKl0mS1+5XRcN2eChAXg==","signature":"3ba9b6e4087d4210491a33f702e992ece87d56db","userInfo":{"nickName":"微信用户","gender":0,"language":"","city":"","province":"","country":"","avatarUrl":"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132","is_demote":"true"},"rawData":"{\"nickName\":\"微信用户\",\"gender\":0,\"language\":\"\",\"city\":\"\",\"province\":\"\",\"country\":\"\",\"avatarUrl\":\"https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132\",\"is_demote\":true}","errMsg":"getUserProfile:ok","openid":"o4WMG42vIqH4fGQgxkL6KZNo0060","unionid":"oT4Cj0_dYqmiGELumUNhti7K3Vc0"}]
+
+finished_flag = True
+proxies = {'http': "",
+           'https': ""}
+
+
+def proxies_change():
+    """
+        切换IP线程 150秒切换一次IP
+        return: 无
+    """
+    global finished_flag
+    url = "https://service.ipzan.com/core-extract?num=1&no=20230930146331307287&minute=3&format=txt&protocol=1&pool=quality&mode=whitelist&secret=daogee708nejt4g"
+    while finished_flag:
+        resp = requests.get(url)
+        if resp.status_code == 200:
+            proxies["http"] = resp.text
+            proxies["https"] = resp.text
+        print("获取到IP: ", resp.text)
+        time.sleep(150)
+
 
 
 # 更新token
@@ -24,7 +46,7 @@ def update_token(json_data):
         "accept-language": "zh-CN,zh;q=0.9",
     }
     try:
-        resp = requests.post("https://p.xpfarm.cn/treemp/wx.Login/index", headers=headers, json=json_data).json()
+        resp = requests.post("https://p.xpfarm.cn/treemp/wx.Login/index", headers=headers, json=json_data, proxies=proxies).json()
         if resp["code"] == 1000:
             print("token刷新成功")
             token = resp["data"]["token"]
@@ -73,7 +95,7 @@ class XP_FARM:
     def get_information(self):
         print("开始登录")
         try:
-            resp = requests.post(url=self.information_url, headers=self.information_header).json()
+            resp = requests.post(url=self.information_url, headers=self.information_header, proxies=proxies).json()
             print(resp)
             mobile = resp["data"]["mobile"]
             nickname = resp["data"]["nickname"]
@@ -95,7 +117,7 @@ class XP_FARM:
     # 签到
     def sign_in(self):
         try:
-            resp = requests.post(url=self.sign_info_url, headers=self.information_header).json()
+            resp = requests.post(url=self.sign_info_url, headers=self.information_header, proxies=proxies).json()
             if resp["code"] == 1000:
                 nextDay = resp["data"]["nextDay"]
                 isSignInToday = resp["data"]["isSignInToday"]
@@ -113,7 +135,7 @@ class XP_FARM:
     # 获取果树信息
     def get_tree_info(self):
         try:
-            resp = requests.post(self.tree_info_url, headers=self.information_header).json()
+            resp = requests.post(self.tree_info_url, headers=self.information_header, proxies=proxies).json()
             if resp["code"] == 1000:
                 type = resp["data"]["type"]
                 type_name = resp["data"]["type_name"]
@@ -134,7 +156,7 @@ class XP_FARM:
     # 果树签到
     def tree_sign_in(self):
         try:
-            resp = requests.post(self.tree_sign_in_url, headers=self.information_header).json()
+            resp = requests.post(self.tree_sign_in_url, headers=self.information_header, proxies=proxies).json()
             # print(resp)
             if resp["code"] == 1000:
                 reward = resp["data"]["reward"]
@@ -154,7 +176,7 @@ class XP_FARM:
         if self.tree_water > 10:
             print("开始浇水")
             while self.tree_water > 10:
-                resp = requests.post(self.add_water_url, headers=self.information_header).json()
+                resp = requests.post(self.add_water_url, headers=self.information_header, proxies=proxies).json()
                 if resp["code"] == 1000:
                     type = resp["data"]["type"]
                     progress = resp["data"]["progress"]
@@ -176,7 +198,7 @@ class XP_FARM:
         if self.tree_fertilizer > 0:
             print("开始施肥")
             while self.tree_fertilizer > 0:
-                resp = requests.post(self.add_fertilizer_url, headers=self.information_header).json()
+                resp = requests.post(self.add_fertilizer_url, headers=self.information_header, proxies=proxies).json()
                 if resp["code"] == 1000:
                     fertilizer_value = resp["data"]["fertilizer_value"]
                     fertilizer = resp["data"]["fertilizer"]
@@ -202,7 +224,7 @@ class XP_FARM:
                 "task_id": id
             }
             try:
-                resp = requests.post(self.complete_tasks_url, headers=self.task_headers, json=data).json()
+                resp = requests.post(self.complete_tasks_url, headers=self.task_headers, json=data, proxies=proxies).json()
                 if resp["code"] == 1000:
                     print(f"任务完成成功 原因是{resp['message']}")
                 else:
@@ -213,7 +235,7 @@ class XP_FARM:
                 exit(0)
             print(f"开始领取任务{id}奖励")
             try:
-                resp = requests.post(self.receive_tasks_url, headers=self.task_headers, json=data).json()
+                resp = requests.post(self.receive_tasks_url, headers=self.task_headers, json=data, proxies=proxies).json()
                 # print(resp)
                 if resp["code"] == 1000:
                     print(f"任务奖励领取成功 {resp['data']['reward'][0]['reward_type_name']}x{resp['data']['reward'][0]['reward']}")
@@ -228,6 +250,9 @@ class XP_FARM:
 
 
 if __name__ == '__main__':
+    thread = threading.Thread(target=proxies_change)
+    thread.start()
+    time.sleep(10)
     for json_data in json_datas:
         xp1 = XP_FARM(update_token(json_data))
         xp1.get_information()
@@ -237,4 +262,4 @@ if __name__ == '__main__':
         xp1.do_tasks()
         xp1.get_tree_info()
         xp1.add_water_and_fertilizer()
-
+    finished_flag = False
