@@ -24,11 +24,14 @@ def proxies_change():
             proxies["https"] = resp.text
         print("获取到IP: ", resp.text)
         time.sleep(150)
+    print("proxies_change exit")
+    exit(0)
 
 
 
 # 更新token
 def update_token(json_data):
+    global finished_flag
     print("开始刷新token")
     headers = {
         "content-length": "1303",
@@ -53,10 +56,12 @@ def update_token(json_data):
             return token
         else:
             print("刷新token失败 直接退出")
+            finished_flag = False
             exit(0)
     except Exception as e:
         print(e)
         print("刷新token失败 直接退出")
+        finished_flag = False
         exit(0)
 
 
@@ -93,6 +98,7 @@ class XP_FARM:
 
     # 获取登录信息
     def get_information(self):
+        global finished_flag
         print("开始登录")
         try:
             resp = requests.post(url=self.information_url, headers=self.information_header, proxies=proxies).json()
@@ -111,6 +117,7 @@ class XP_FARM:
             print(f"{nickname} 登录成功\n手机号 {mobile}\n当前积分 {integral}\n果金 {fruit_gold}\n优惠券数量 {coupon_count}")
         except Exception as e:
             print(e)
+            finished_flag = False
             print("登录失败 authorization失效 重新抓")
             exit(0)
 
@@ -263,3 +270,4 @@ if __name__ == '__main__':
         xp1.get_tree_info()
         xp1.add_water_and_fertilizer()
     finished_flag = False
+    print("finished_flag = False")
