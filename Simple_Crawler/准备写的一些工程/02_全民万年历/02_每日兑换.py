@@ -2,8 +2,9 @@ import time
 import requests
 import random
 
-usertoken = '4{qv>8mM4$gP}]@)[!}Bd2>R4qG~Y;H2r],YZ5*7F>_VLJZ6Y~b8JJ'
-
+usertoken = ';+:w?Bw,>zi&1:/DGl?Ne$QG~G;1{;FP%2mz39#Os,zo)91AM8H)z#'
+deviceid = '4268947'
+userid = '2200667'
 
 def exchange():
     url = 'https://c-dapi.qmrl888.com/gcoin/rp.api'
@@ -21,8 +22,8 @@ def exchange():
         'osver': '11',
         'serverapi': '2',
         'os': 'Android',
-        'deviceid': '3665258',
-        'userid': '2200667',
+        'deviceid': deviceid,
+        'userid': userid,
         'usertoken': usertoken,
         'content-type': 'application/json; charset=UTF-8',
         'content-length': '27',
@@ -55,8 +56,8 @@ def coin_change(value):
         'osver': '11',
         'serverapi': '2',
         'os': 'Android',
-        'deviceid': '3665258',
-        'userid': '2200667',
+        'deviceid': deviceid,
+        'userid': userid,
         'usertoken': usertoken,
         'accept-encoding': 'gzip',
         'user-agent': 'okhttp/4.11.0',
@@ -80,8 +81,8 @@ def get_information():
         'osver': '11',
         'serverapi': '2',
         'os': 'Android',
-        'deviceid': '3665258',
-        'userid': '2200667',
+        'deviceid': deviceid,
+        'userid': userid,
         'usertoken': usertoken,
         'accept-encoding': 'gzip',
         'user-agent': 'okhttp/4.11.0',
