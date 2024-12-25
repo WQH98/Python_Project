@@ -17,7 +17,7 @@ def proxies_change():
     """
     global finished_flag
     url = "https://service.ipzan.com/core-extract?num=1&no=20230930146331307287&minute=3&format=txt&protocol=1&pool=quality&mode=whitelist&secret=daogee708nejt4g"
-    while finished_flag:
+    while finished_flag and threading.main_thread().is_alive():
         resp = requests.get(url)
         if resp.status_code == 200:
             proxies["http"] = resp.text
@@ -202,7 +202,7 @@ class XP_FARM:
         else:
             print("水量不足 无法浇水")
         count = 0
-        if self.tree_fertilizer > 0:
+        if self.tree_fertilizer > 10:
             print("开始施肥")
             while self.tree_fertilizer > 0:
                 resp = requests.post(self.add_fertilizer_url, headers=self.information_header, proxies=proxies).json()
