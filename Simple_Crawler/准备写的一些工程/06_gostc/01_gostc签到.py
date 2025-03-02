@@ -1,6 +1,8 @@
 import requests
+from notify import send
 
 gostc_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDb2RlIjoiOTY3NzI5YTEtOWQ3OC00ZTA3LWIzZjItZjIxYzliOTVjNGQyIiwiRGF0YSI6eyJhZG1pbiI6IjIifSwiZXhwIjoxNzQwODc4NjUzLCJqdGkiOiI5Njc3MjlhMS05ZDc4LTRlMDctYjNmMi1mMjFjOWI5NWM0ZDIiLCJpYXQiOjE3NDAyNzM4NTMsImlzcyI6Imdvc3RjIiwibmJmIjoxNzQwMjczODUzLCJzdWIiOiI5Njc3MjlhMS05ZDc4LTRlMDctYjNmMi1mMjFjOWI5NWM0ZDIifQ.3IUcG-KSa1oDZJlT9mwtNPxFZFIptSwqjpPX0PlvOp8"
+
 
 headers = {
     "accept": "application/json, text/plain, */*",
@@ -16,33 +18,50 @@ headers = {
 
 
 def check_in(token):
+    global send_msg
     check_in_url = "https://gost.sian.one/api/v1/auth/checkin"
     headers["token"] = token
     resp = requests.post(check_in_url, headers=headers)
     if resp.json()["code"] == 1:
-        print(resp.json()["msg"])
+        msg = resp.json()["msg"] + '\n'
+        print(msg, end="")
+        send_msg += msg
+        # print(resp.json()["msg"])
     else:
-        print("签到成功")
+        msg = "签到成功" + '\n'
+        print(msg, end="")
+        send_msg += msg
+        # print("签到成功")
 
 
 def get_user_info(token):
+    global send_msg
     userinfo_url = "https://gost.sian.one/api/v1/auth/userInfo"
     headers["token"] = token
     resp = requests.post(userinfo_url, headers=headers).json()
     checkinAmount = resp["data"]["checkinAmount"]
     if checkinAmount == '0':
-        print(resp["data"]["account"] + " " + "尚未签到，开始签到")
+        msg = resp["data"]["account"] + " " + "尚未签到，开始签到" + '\n'
+        print(msg, end="")
+        send_msg += msg
+        # print(resp["data"]["account"] + " " + "尚未签到，开始签到")
         return 0
     else:
-        print(resp["data"]["account"] + " " + "今日已签到，今日签到积分为:" + checkinAmount + "，总积分为：" + resp["data"]["amount"])
+        msg = resp["data"]["account"] + " " + "今日已签到，今日签到积分为:" + checkinAmount + "，总积分为：" + resp["data"]["amount"] + '\n'
+        print(msg, end="")
+        send_msg += msg
+        # print(resp["data"]["account"] + " " + "今日已签到，今日签到积分为:" + checkinAmount + "，总积分为：" + resp["data"]["amount"])
         return 1
 
 
 if __name__ == '__main__':
+    global send_msg
+    send_msg = ""
     res = get_user_info(gostc_token)
     if res == 0:
         check_in(gostc_token)
         get_user_info(gostc_token)
 
+    send("gostc-通知", send_msg)
 
 
